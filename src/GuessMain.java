@@ -5,7 +5,7 @@ public class GuessMain {
     public static int rando()
     {
         Random gen = new Random();
-        return gen.nextInt(20) + 1;
+        return gen.nextInt(20) + 1;// generating a number between 1 and 20
 
     }
     public static void rng()
@@ -16,22 +16,29 @@ public class GuessMain {
         String newline= scan.nextLine();
         System.out.println("Well, "+newline+", I am thinking of a number between 1 and 20.\n Take a guess.");
         newline= scan.nextLine();
-        while(Integer.decode(newline)!=gen) {
-            while (Integer.decode(newline) < 1 || Integer.decode(newline) > 20) {
-                System.out.println("The number was not between 1 and 20. Please type a number between 1 and 20.");
-                newline = scan.nextLine();
-            }
-            if (Integer.decode(newline) < gen) {
-                System.out.println("Try a larger number.");
-                count++;
-                newline = scan.nextLine();
-            }
-            if (Integer.decode(newline) > gen) {
-                System.out.println("Try a smaller number.");
-                count++;
-                newline = scan.nextLine();
-            }
+        while (!(Parseable(newline) instanceof Integer)||Integer.decode(newline) < 1 || Integer.decode(newline) > 20) {
+            System.out.println("The number was not between 1 and 20. Please type a number between 1 and 20.");
+            newline = scan.nextLine();
         }
+            while (Integer.decode(newline) != gen) {
+
+                while (!(Parseable(newline) instanceof Integer)||Integer.decode(newline) < 1 || Integer.decode(newline) > 20) {
+                    System.out.println("The number was not between 1 and 20. Please type a number between 1 and 20.");
+                    newline = scan.nextLine();
+                }
+                if (Integer.decode(newline) < gen) {
+                    System.out.println("Try a larger number.");
+                    count++;
+                    newline = scan.nextLine();
+                }
+                if (Integer.decode(newline) > gen) {
+                    System.out.println("Try a smaller number.");
+                    count++;
+                    newline = scan.nextLine();
+                }
+            }
+
+
         count++;
         if(count<=6)
         System.out.println("You win! You guessed the correct number in "+count+" tries.");
@@ -39,22 +46,31 @@ public class GuessMain {
             System.out.println("You guessed the correct number, but you got it after too many attempts.");
 
         }
+        public static Object Parseable(String str)
+        {  //This function tests if the user input can be parsed into an int.
+            try{
+                return Integer.decode(str);
+            }
+            catch(Exception e){
+                return "The line typed was not a number between 1 and 20.";
+            }
+        }
     public static void main(String[] args)
     {
-       rng();
+       rng();//runs the game for at least one round
        System.out.println("Try again? (Type 'y' for yes, 'n' for no)");
        Scanner scan=new Scanner(System.in);
        String check=scan.nextLine();
         while(!check.equals("n"))
         {
-            if(!check.equals("y"))
+            if(!check.equals("y"))//give the user another chance, in case they mistype y or n.
             {
                 System.out.println("Please type either 'y' for another game, or 'n' to cancel.");
                 check=scan.nextLine();
             }
             if (check.equals("y"))
             {
-                rng();
+                rng();//restart the guessing game.
                 System.out.println("Try again? (Type 'y' for yes, 'n' for no)");
                 check=scan.nextLine();
             }
