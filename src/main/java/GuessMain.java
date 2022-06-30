@@ -55,25 +55,33 @@ public class GuessMain {
                 return "The line typed was not a number between 1 and 20.";
             }
         }
+        public static Object yesOrNo(String str)
+        {
+            if(str.equals("y")||str.equals("n"))
+                return str;
+            else
+                return 0;
+        }
     public static void main(String[] args)
     {
        rng();//runs the game for at least one round
        System.out.println("Try again? (Type 'y' for yes, 'n' for no)");
        Scanner scan=new Scanner(System.in);
        String check=scan.nextLine();
-        while(!check.equals("n"))
-        {
-            if(!check.equals("y"))//give the user another chance, in case they mistype y or n.
-            {
-                System.out.println("Please type either 'y' for another game, or 'n' to cancel.");
-                check=scan.nextLine();
-            }
-            if (check.equals("y"))
-            {
+        while(true)
+        {    try {
+            if (yesOrNo(check).equals("y")) {
                 rng();//restart the guessing game.
                 System.out.println("Try again? (Type 'y' for yes, 'n' for no)");
-                check=scan.nextLine();
+                check = scan.nextLine();
             }
+            if (yesOrNo(check).equals("n")) {
+                break;
+            }
+        }
+        catch (Exception e){
+            System.out.println("Please type either 'y' for another game, or 'n' to cancel.");
+        }
 
         }
     }
